@@ -1,28 +1,41 @@
 "use client"
 
-type DesktopIcon = {
-    id: string
-    title: string
-    icon: string
-    content: React.ReactNode
-}
+import { desktopIcons } from "@/lib/desktopIconsData";
+import type { DesktopIcon } from "@/lib/desktopIcons";
 
-type DesktopProps = {
-    icons: DesktopIcon[]
-}
+export default function Dekstop( ) {
+    const handleClick = (icon: DesktopIcon) => {
+        alert(`Clicked on ${icon.title}`);
+    };
 
-export default function Dekstop({ icons }: DesktopProps) {
+    const handleDoubleClick = (icon: DesktopIcon) => {
+        alert(`Opening content: ${icon.content}`);
+    };
+
     return (
         <div
           className="flex-1 p-4 reactive"
-          style={{ backgroundColor: "#008080" }}
+          style={{
+            backgroundColor: "#008080",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+        }}
         >
-            {icons.map((icon) => (
-                <div key={icon.id} style={{ display: 'inline-block', margin: '10px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '48px' }}>{icon.icon}</div>
-                    <div>{icon.title}</div>
-                </div>
-            ))}
+            <div className="grid grid-cols-1 gap-4 w-24">
+                {desktopIcons.map((icon) => (
+                    <div
+                        key={icon.id}
+                        className={`desktop-icon`}
+                        onClick={() => handleClick(icon)}
+                        onDoubleClick={() => handleDoubleClick(icon)}
+                    >
+                        <div className="text-4xl">{icon.icon}</div>
+                        <div className="text-xs text-white text-center font-bold drop-shadow-[0_1px_1px_rgba(0,0,0,1)]">
+                            {icon.title}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
