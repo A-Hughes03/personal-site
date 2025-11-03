@@ -1,7 +1,7 @@
 "use client"
 
-import { desktopIcons } from "@/lib/desktopIconsData";
-import type { DesktopIcon } from "@/lib/desktopIcons";
+import { desktopIcons } from "@/components/desktop/lib/desktopIconsData";
+import type { DesktopIcon } from "@/components/desktop/lib/desktopIcons";
 
 export default function Dekstop( ) {
     const handleClick = (icon: DesktopIcon) => {
