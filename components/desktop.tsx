@@ -1,9 +1,5 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
-
 type DesktopIcon = {
     id: string
     title: string
