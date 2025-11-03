@@ -1,5 +1,5 @@
 import ContactData from "../data/contactData";
-import type { DesktopIcon } from "./desktopIcons";
+import type { DesktopIcon } from "./desktopIcons.types";
 
 export const desktopIcons: DesktopIcon[] = [
     {
