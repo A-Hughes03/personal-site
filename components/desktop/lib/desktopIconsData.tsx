@@ -1,6 +1,7 @@
 import AboutData from "../data/aboutData";
 import BlogData from "../data/blogData";
 import ContactData from "../data/contactData";
+import ProjectsData from "../data/projectsData";
 import SkillsData from "../data/skillsData";
 import type { DesktopIcon } from "./desktopIcons.types";
 
@@ -28,5 +29,11 @@ export const desktopIcons: DesktopIcon[] = [
         title: "Blog",
         icon: "📝",
         content: <BlogData />,
+      },
+      {
+        id: "projects",
+        title: "Projects",
+        icon: "📁",
+        content: <ProjectsData />,
       },
 ];
