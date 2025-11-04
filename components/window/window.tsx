@@ -26,12 +26,15 @@ export default function Window({
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+      
     if (windowData.isMaximized) return;
 
     const rect = windowRef.current?.getBoundingClientRect();
     if (rect) {
-      setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      setDragOffset({ x: clientX - rect.left, y: clientY - rect.top });
       setIsDragging(true);
     }
     focusWindow();
@@ -39,7 +42,7 @@ export default function Window({
 
   // Drag handling
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: globalThis.MouseEvent) => {
       if (isDragging && !windowData.isMaximized) {
         updateWindowPosition({
             x: e.clientX - dragOffset.x,
@@ -47,16 +50,32 @@ export default function Window({
         });
       }
     };
+
+    const handleTouchMove = (e: TouchEvent) => {
+        if (isDragging && !windowData.isMaximized) {
+          const touch = e.touches[0];
+          updateWindowPosition({
+              x: touch.clientX - dragOffset.x,
+              y: touch.clientY - dragOffset.y,
+          });
+        }
+    }
+
     const handleMouseUp = () => setIsDragging(false);
+    const handleTouchEnd = () => setIsDragging(false);
 
     if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+        document.addEventListener("touchmove", handleTouchMove);
+        document.addEventListener("touchend", handleTouchEnd);
     }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
     };
   }, [isDragging, dragOffset, windowData.isMaximized, updateWindowPosition, windowData]);
 
@@ -87,6 +106,7 @@ export default function Window({
     <div
       className="win95-title-bar flex items-center justify-between cursor-move select-none"
       onMouseDown={handleMouseDown}
+      onTouchStart={handleMouseDown}
     >
       <div className="flex items-center gap-2 text-sm">
         <span>{windowData.icon}</span>
