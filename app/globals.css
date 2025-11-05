@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #c0c0c0;
+  --foreground: #000000;
+  --window-blue: #000080;
+  --border-light: #ffffff;
+  --border-dark: #000000;
+  --border-mid: #808080;
 }
 
 @theme inline {
@@ -12,17 +16,18 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "MS Sans Serif", Tahoma, Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  -webkit-font-smoothing: none;
 }
 
 .desktop-icon {
@@ -33,102 +38,148 @@ body {
   padding: 4px;
   cursor: pointer;
   user-select: none;
+  text-align: center;
+  font-size: 11px;
+}
+
+.desktop-icon:hover {
+  background-color: rgba(0, 0, 128, 0.1);
 }
 
 .win95-border {
   border-style: solid;
   border-width: 2px;
-  border-top-color: #ffffff;
-  border-left-color: #ffffff;
-  border-right-color: #000000;
-  border-bottom-color: #000000;
-}
-
-.win95-title-bar {
-  background: linear-gradient(90deg, #000080, #1084d0);
-  color: white;
-  font-weight: bold;
-  padding: 2px 4px;
-}
-
-.win95-window {
-  background: #c0c0c0;
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  border-top-color: var(--border-light);
+  border-left-color: var(--border-light);
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
 }
 
 .win95-border-inset {
   border-style: solid;
   border-width: 2px;
-  border-top-color: #000000;
-  border-left-color: #000000;
-  border-right-color: #ffffff;
-  border-bottom-color: #ffffff;
+  border-top-color: var(--border-dark);
+  border-left-color: var(--border-dark);
+  border-right-color: var(--border-light);
+  border-bottom-color: var(--border-light);
+}
+
+.win95-title-bar {
+  background: var(--window-blue);
+  color: white;
+  font-weight: bold;
+  padding: 2px 4px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.win95-window {
+  background: var(--background);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--border-mid);
+  border-top-color: var(--border-light);
+  border-left-color: var(--border-light);
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
+  overflow: hidden;
 }
 
 .win95-button {
-  background: #c0c0c0;
+  background: var(--background);
   border-style: solid;
   border-width: 2px;
-  border-top-color: #ffffff;
-  border-left-color: #ffffff;
-  border-right-color: #000000;
-  border-bottom-color: #000000;
+  border-top-color: var(--border-light);
+  border-left-color: var(--border-light);
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
   padding: 4px 12px;
   font-size: 11px;
   cursor: pointer;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
 }
 
-/* --- Windows 95 content styles --- */
+.win95-button:active {
+  border-top-color: var(--border-dark);
+  border-left-color: var(--border-dark);
+  border-right-color: var(--border-light);
+  border-bottom-color: var(--border-light);
+}
 
 .win95-panel {
-  background: #c0c0c0;
-  border: 2px solid #808080;
-  border-top-color: #ffffff;
-  border-left-color: #ffffff;
-  border-right-color: #000000;
-  border-bottom-color: #000000;
+  background: var(--background);
+  border: 2px solid var(--border-mid);
+  border-top-color: var(--border-light);
+  border-left-color: var(--border-light);
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
   padding: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  overflow-wrap: break-word;
+  font-size: 12px;
 }
 
 .win95-section {
   background: #dfdfdf;
-  border: 2px solid #808080;
-  border-top-color: #ffffff;
-  border-left-color: #ffffff;
-  border-right-color: #000000;
-  border-bottom-color: #000000;
+  border: 2px solid var(--border-mid);
+  border-top-color: var(--border-light);
+  border-left-color: var(--border-light);
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
   padding: 8px;
   margin-bottom: 8px;
 }
 
 .win95-label {
   font-size: 11px;
-  color: #000000;
+  color: var(--foreground);
   margin-bottom: 4px;
 }
 
 .win95-heading {
-  font-family: "MS Sans Serif", "Tahoma", sans-serif;
+  font-family: "MS Sans Serif", Tahoma, sans-serif;
   font-weight: bold;
-  color: #000080;
+  color: var(--window-blue);
   font-size: 14px;
   margin-bottom: 8px;
 }
 
-.win95-avatar {
-  border: 2px solid #808080;
-  border-top-color: #ffffff;
-  border-left-color: #ffffff;
-  border-right-color: #000000;
-  border-bottom-color: #000000;
-  background: #c0c0c0;
-  padding: 4px;
-}
-
 .win95-subsection {
-  border-top: 1px solid #808080;
+  border-top: 1px solid var(--border-mid);
   margin-top: 6px;
   padding-top: 6px;
   font-size: 11px;
-  color: #000;
+  color: var(--foreground);
+}
+
+.win95-avatar {
+  border: 2px solid var(--border-mid);
+  border-top-color: var(--border-light);
+  border-left-color: var(--border-light);
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
+  background: var(--background);
+  padding: 4px;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
+
+  .win95-window {
+    width: 95vw;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .win95-panel {
+    padding: 6px;
+  }
+
+  .win95-heading {
+    font-size: 13px;
+  }
 }
