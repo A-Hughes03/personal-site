@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Dekstop from "@/components/desktop/desktop";
 import Window from "@/components/window/window";
 import { desktopIcons } from "@/components/desktop/lib/desktopIconsData";
@@ -17,14 +18,18 @@ export default function Home() {
     focusWindow,
     updateWindowPosition,
     updateWindowSize,
-    highestZIndex,
   } = useWindows();
 
-  const {
-    startMenuOpen,
-    toggleStartMenu,
-    closeStartMenu,
-  } = useStartMenu();
+  const { startMenuOpen, toggleStartMenu, closeStartMenu } = useStartMenu();
+
+  useEffect(() => {
+    const aboutIcon = desktopIcons.find((icon) => icon.id === "about");
+
+    if (aboutIcon && !sessionStorage.getItem("aboutOpened")) {
+      openWindow(aboutIcon.id, aboutIcon.title, aboutIcon.icon, aboutIcon.content);
+      sessionStorage.setItem("aboutOpened", "true");
+    }
+  }, [openWindow]);
 
   const handleIconDoubleClick = (icon: typeof desktopIcons[0]) => {
     openWindow(icon.id, icon.title, icon.icon, icon.content);
@@ -46,10 +51,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
-      <Dekstop
-        icons={desktopIcons}
-        onIconDoubleClick={handleIconDoubleClick}
-      />
+      <Dekstop icons={desktopIcons} onIconDoubleClick={handleIconDoubleClick} />
 
       {windows.map((window) => (
         <Window
@@ -59,9 +61,7 @@ export default function Home() {
           minimizeWindow={() => minimizeWindow(window.id)}
           maximizeWindow={() => maximizeWindow(window.id)}
           focusWindow={() => focusWindow(window.id)}
-          updateWindowPosition={(position) =>
-            updateWindowPosition(window.id, position)
-          }
+          updateWindowPosition={(position) => updateWindowPosition(window.id, position)}
           updateWindowSize={(size) => updateWindowSize(window.id, size)}
         />
       ))}
